@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h2>Summary report</h2>
+        <h3>Numerical Trackers</h3>
+        <h5> No of Numerical trackers: {{data["n1"]}}</h5>
+        <div>
+            {% for x in data[0] %}
+            <table>
+                <tr>
+                    <h4>{{x["Name"]}}</h4>
+                    <td><h5>Days Logged: </h5>{{x["Days tracked"]}}</td>
+                    <td><h5>Average: </h5>{{x["avg"]}}</td>
+                </tr>
+            </table>    
+            {%endfor%}
+        </div>
+        <h3>Multi-Choice Trackers</h3>
+        <h5> No of Multi_choice trackers: {{data["n2"]}}</h5>
+        <div>
+            {% for x in data[1] %}
+            <table>
+                <tr>
+                    <h4>{{x["Name"]}}</h4>
+                    <td><h5>Days Logged: </h5>{{x["Days tracked"]}}</td>
+                    <td><h5>Average: </h5>{{x["avg"]}}</td>
+                </tr>
+            </table>    
+            {%endfor%}
+        </div>
+    </body>
+</html>

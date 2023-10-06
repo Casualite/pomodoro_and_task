@@ -1,0 +1,794 @@
+openapi: 3.0.0
+info:
+  title: Quantified self appAPI
+  description: >
+    <div>
+    <h3>General Notes:</h3>
+    <ol> 
+      <li> The TrackerAPI has the parameter ID  in the but the same parameter is used as User in post </li>
+    </ol>
+    </div>
+    
+    
+    
+    <h3> Error Codes </h3> 
+    <table>
+      <thead>
+        <th>Resource</th>
+        <th>Error Code</th>
+        <th>Message</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Course</td>
+        <td>LOGIN001</td>
+        <td>Invalid Username or Password!</td>
+      </tr>
+      <tr>
+        <td>Course</td>
+        <td>LOGIN002</td>
+        <td>Wrong Password!</td>
+      </tr>
+      
+    </tbody>
+    </table>
+
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:8800/
+paths:
+  /api/login/{user} :
+    description: End point to read, update and delete a User 
+    get:
+      description: Operation to Read User_Login resource.
+      parameters:
+        - in: path
+          name: user
+          required: true
+          schema:
+            type: string
+            example: 'Pranav'
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: login object
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                    example: 'Pranav'
+                  password:
+                    type: string
+                    example: 'thispass'
+                  insession:
+                    type: boolean
+                    example: True
+        '500':
+          description: Internal Server Error
+        '404':
+          description: User not found
+    
+    post:
+      description: Operation to update the User_login resource.
+      parameters:
+        - in: path
+          name: user
+          required: true
+          schema:
+            type: string
+            example: 'Pranav'
+      requestBody:
+        content:
+          application/json:
+            schema:
+                title: login object
+                type: object
+                properties:
+                  password:
+                    type: string
+                    example: 'thispass'
+                  
+      responses:
+        '201':
+          description: Successfuly updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                    example: 'Pranav'
+                  password:
+                    type: string
+                    example: 'thispass'
+                  insession:
+                    type: boolean
+                    example: True
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+
+    put:
+      description: Operation to update the User_login resource.
+      parameters:
+        - in: path
+          name: user
+          required: true
+          schema:
+            type: string
+            example: 'Pranav'
+      requestBody:
+        content:
+          application/json:
+            schema:
+                title: login object
+                type: object
+                properties:
+                  password:
+                    type: string
+                    example: 'thispass'
+                  insession:
+                    type: boolean
+                    example: True
+      responses:
+        '200':
+          description: Successfuly updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                    example: 'Pranav'
+                  password:
+                    type: string
+                    example: 'thispass'
+                  insession:
+                    type: boolean
+                    example: True
+        '404':
+          description: User not found
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+    delete:
+      description: Operation to delete the course resource
+      parameters:
+        - in: path
+          name: user
+          required: true
+          schema:
+            type: string
+            example: 'Pranav'
+      responses:
+        '200':
+          description: Successfully Deleted
+        '404':
+          description: Course not found
+        '500':
+          description: Intenal Server Error
+  /api/Tracker/{ID}:
+    description: End point to get/put/post/delete Tracker resource.ID is TrackerID in this case.
+    get:
+      description: Operation to get the Tracker resource
+      parameters:
+        - in: path
+          name: ID
+          required: true
+          schema:
+            type: string
+            example: 'Mood13'
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: login object
+                type: object
+                properties:
+                  ID:
+                    type: string
+                    example: 'Mood123'
+                  name:
+                    type: string
+                    example: 'Mood'
+                  TrackerType:
+                    type: string
+                    example: 'Multiple-choice'
+                  Description:
+                    type: string
+                    example: 'records happiness'
+                  Settings:
+                    type: string
+                    example: 'Happy,Sad,Angry'
+                  Units :
+                    type: string
+                    example : 'km/None'
+                    
+        '500':
+          description: Internal Server Error
+        '404':
+          description: User not found
+  
+    post:
+        description: Operation to create the course resource. ID is User ID in this case.
+        parameters:
+          - in: path
+            name: ID
+            required: true
+            schema:
+              type: string
+              example: 'Pranav'
+        requestBody:
+          content:
+            application/json:
+              schema:
+                  title: Tracker object
+                  type: object
+                  properties:
+                    Name:
+                      type: string
+                      example: 'Mood'
+                    TrackerType:
+                      type: string
+                      example: 'Numerical'
+                    Settings:
+                      type: string
+                      example: 'Happy,Sad,Angry'
+                    units:
+                      type: string
+                      example: 'km'
+                    Description:
+                       type: string
+                       example: 'happiness tracker'
+                    
+                    
+        responses:
+          '201':
+            description: Creation Successful
+            content:
+              application/json:
+                schema:
+                  title: login object
+                  type: object
+                  properties:
+                    ID:
+                      type: string
+                      example: 'Mood123'
+                    name:
+                      type: string
+                      example: 'Mood'
+                    TrackerType:
+                      type: string
+                      example: 'Multiple-choice'
+                    Description:
+                      type: string
+                      example: 'records happiness'
+                    Settings:
+                      type: string
+                      example: 'Happy,Sad,Angry'
+                    Units :
+                      type: string
+                      example : 'km/None'
+
+          '500':
+            description: Internal Server Error
+          '404':
+            description: User not found
+     
+    put:
+        description: Operation to update the tracker resource.ID is TrackerID in this case.
+        parameters:
+          - in: path
+            name: ID
+            required: true
+            schema:
+              type: string
+              example: 'Mood13'
+        requestBody:
+          content:
+            application/json:
+              schema:
+                  title: Tracker object
+                  type: object
+                  properties:
+                    Name:
+                      type: string
+                      example: 'Mood'
+                    TrackerType:
+                      type: string
+                      example: 'Numerical'
+                    Settings:
+                      type: string
+                      example: 'Happy,Sad,Angry'
+                    units:
+                      type: string
+                      example: 'km'
+                    Description:
+                       type: string
+                       example: 'happiness tracker'
+
+
+        responses:
+          '200':
+            description:  Successfully updated
+            content:
+              application/json:
+                schema:
+                  title: login object
+                  type: object
+                  properties:
+                    ID:
+                      type: string
+                      example: 'Mood123'
+                    name:
+                      type: string
+                      example: 'Mood'
+                    TrackerType:
+                      type: string
+                      example: 'Multiple-choice'
+                    Description:
+                      type: string
+                      example: 'records happiness'
+                    Settings:
+                      type: string
+                      example: 'Happy,Sad,Angry'
+                    Units :
+                      type: string
+                      example : 'km/None'
+
+          '500':
+            description: Internal Server Error
+          '404':
+            description: User not found
+    
+    delete:
+      description: Operation to delete the Tracker resource.ID is TrackerID in this case.
+      parameters:
+        - in: path
+          name: ID
+          required: true
+          schema:
+            type: string
+            example: 'Mood13'
+      responses:
+        '200':
+          description: Successfully Deleted
+        '404':
+          description: Tracker not found
+        '500':
+          description: Intenal Server Error
+  /api/userTracker/{user} :
+    get:
+      description: End point to get user_Tracker resource
+      parameters:
+        - in: path
+          name: user
+          required: true
+          schema:
+            type: string
+            example: 'Pranav'
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: userTracker object
+                type: object
+                properties:
+                  ID:
+                    type: string
+                    example: 'Mood123'
+                  user:
+                    type: string
+                    example: 'Pranav'
+                  count:
+                    type: integer
+                    example: 5
+        '500':
+          description: Internal Server Error
+        '404':
+          description: User not found
+  /api/userTracker/{user}/{ID}:
+      delete :
+        description: Operation to delete the userTracker resource
+        parameters:
+          - in: path
+            name: user
+            required: true
+            schema:
+              type: string
+              example: 'Pranav'
+          - in: path
+            name: ID
+            required: true
+            schema:
+              type: string
+              example: 'mood1'
+        responses:
+          '200':
+            description: Successfully Deleted
+          '404':
+            description: Tracker not found
+          '500':
+            description: Intenal Server Error
+  /api/Data/{Eno}:
+    get:
+        description: Operation to get the Data resource
+        parameters:
+          - in: path
+            name: Eno
+            required: true
+            schema:
+              type: integer
+              example: 4
+        responses:
+          '200':
+            description: Request Successful
+            content:
+              application/json:
+                schema:
+                  title: Data object
+                  type: object
+                  properties:
+                    EntryNo:
+                      type: integer
+                      example: 101
+                    user_id:
+                      type: string
+                      example: 'Pranav'
+                    Tracker_ID:
+                      type: string
+                      example: 'Mood1'
+                    Time:
+                      type: string
+                      example: '13 Mar 2022,12:00'
+                    Description:
+                      type: integer
+                      example: 20
+                    note:
+                      type: string
+                      example: 'It was hard'
+                    usertrackers_count:
+                      type: integer
+                      example: 4
+          '500':
+            description: Internal Server Error
+          '404':
+            description: Entry number not found
+    delete :
+      description: Operation to delete the Eno resource
+      parameters:
+        - in: path
+          name: Eno
+          required: true
+          schema:
+            type: integer
+            example: 3
+      responses:
+        '200':
+          description: Successfully Deleted
+        '404':
+          description: Eno not found
+        '500':
+          description: Intenal Server Error
+  /api/Data/{user}/{ID}:
+    description: Url to create student resource
+    post:
+      description: Operation to create the Data resource
+      parameters:
+          - in: path
+            name: user
+            required: true
+            schema:
+              type: string
+              example: 'Pranav'
+          - in: path
+            name: ID
+            required: true
+            schema:
+              type: string
+              example: 'mood1'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Description:
+                  type: integer
+                  example: 40
+                note:
+                  type: string
+                  example: 'thats how much i ran today'
+                
+      responses:
+        '201':
+          description: Successfully Created
+          content:
+            application/json:
+              schema:
+                title: Data object
+                type: object
+                properties:
+                  EntryNo:
+                    type: integer
+                    example: 101
+                  user_id:
+                    type: string
+                    example: 'Pranav'
+                  Tracker_ID:
+                    type: string
+                    example: 'Mood1'
+                  Time:
+                    type: string
+                    example: '13 Mar 2022,12:00'
+                  Description:
+                    type: integer
+                    example: 20
+                  note:
+                    type: string
+                    example: 'It was hard'
+                  usertrackers_count:
+                    type: integer
+                    example: 4
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+  /api/Data/{user}/{ID}/{Eno}:
+    put:
+      description: Operation to create the Data resource
+      parameters:
+          - in: path
+            name: user
+            required: true
+            schema:
+              type: string
+              example: 'Pranav'
+          - in: path
+            name: ID
+            required: true
+            schema:
+              type: string
+              example: 'mood1'
+          - in: path
+            name: Eno
+            required: true
+            schema:
+              type: integer
+              example: 3
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Description:
+                  type: integer
+                  example: 40
+                note:
+                  type: string
+                  example: 'thats how much i ran today'
+                Time: 
+                  type: string
+                  example: "Y-m-dTH:M"
+
+      responses:
+        '200':
+          description: Successfully Created
+          content:
+            application/json:
+              schema:
+                title: Data object
+                type: object
+                properties:
+                  EntryNo:
+                    type: integer
+                    example: 101
+                  user_id:
+                    type: string
+                    example: 'Pranav'
+                  Tracker_ID:
+                    type: string
+                    example: 'Mood1'
+                  Time:
+                    type: string
+                    example: '13 Mar 2022,12:00'
+                  Description:
+                    type: integer
+                    example: 20
+                  note:
+                    type: string
+                    example: 'It was hard'
+                  usertrackers_count:
+                    type: integer
+                    example: 4
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+  /api/Data/Range/{user}/{ID}/{time}:
+      get:
+        parameters:
+          - in: path
+            name: user
+            required: true
+            schema:
+              type: string
+              example: 'Pranav'
+          - in: path
+            name: ID
+            required: true
+            schema:
+              type: string
+              example: 'mood1'
+          - in: path
+            name: time
+            required: true
+            schema:
+              type: string
+              example: '7'
+        responses:
+          '200':
+            description: Successfully Created
+            content:
+              application/json:
+                schema:
+                  title: Data object
+                  type: object
+                  properties:
+                    EntryNo:
+                      type: integer
+                      example: 101
+                    user_id:
+                      type: string
+                      example: 'Pranav'
+                    Tracker_ID:
+                      type: string
+                      example: 'Mood1'
+                    Time:
+                      type: string
+                      example: '13 Mar 2022,12:00'
+                    Description:
+                      type: integer
+                      example: 20
+                    note:
+                      type: string
+                      example: 'It was hard'
+                    usertrackers_count:
+                      type: integer
+                      example: 4
+          '500':
+            description: Internal Server Error
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error_code:
+                      type: string
+                    error_message:
+                      type: string
+  /api/Data/Daily/{user}/{ID}/{time}/{type}:
+      get:
+        parameters:
+          - in: path
+            name: user
+            required: true
+            schema:
+              type: string
+              example: 'Pranav'
+          - in: path
+            name: ID
+            required: true
+            schema:
+              type: string
+              example: 'mood1'
+          - in: path
+            name: time
+            required: true
+            schema:
+              type: string
+              example: '7'
+              
+          - in: path
+            name: type
+            required: true
+            schema:
+              type: string
+              example: 'Numerical'
+        responses:
+          '200':
+            description: Successfully Created
+            content:
+              application/json:
+                schema:
+                  title: Data object
+                  type: object
+                  properties:
+                    EntryNo:
+                      type: integer
+                      example: 101
+                    user_id:
+                      type: string
+                      example: 'Pranav'
+                    Tracker_ID:
+                      type: string
+                      example: 'Mood1'
+                    Time:
+                      type: string
+                      example: '13 Mar 2022,12:00'
+                    Description:
+                      type: integer
+                      example: 20
+                    note:
+                      type: string
+                      example: 'It was hard'
+                    usertrackers_count:
+                      type: integer
+                      example: 4
+          '500':
+            description: Internal Server Error
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error_code:
+                      type: string
+                    error_message:
+                      type: string
+            
+
+
